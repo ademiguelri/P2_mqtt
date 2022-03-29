@@ -1,0 +1,59 @@
+services:
+  timescale:
+    image: timescale/timescaledb:latest-pg14
+    container_name: "timescale"
+    ports: 
+      - 5432:5432
+    volumes:
+      - ./timescale/initialize.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=test
+    networks:
+      - gateway
+
+  grafana:
+    build:
+      context: ./grafana
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    user: '104'
+    environment:
+      - GF_INSTALL_PLUGINS=https://github.com/cloudspout/cloudspout-button-panel/releases/download/7.0.23/cloudspout-button-panel.zip;cloudspout-button-panel
+      - GRAFANA_DATA_HOST=timescale:5432
+      - GRAFANA_DB=test
+      - GRAFANA_USER=postgres
+      - GRAFANA_PSW=password
+      - GRAFANA_DATASOURCE_EDITABLE=True
+      - GRAFANA_ID_DEFAULT=True
+      - GRAFANA_SSL_MODE='disable'
+      - GRAFANA_MAX_OPEN_CONNS=0
+      - GRAFANA_MAX_IDLE_CONNS=2
+      - GRAFANA_CONN_MAX_LIFETIME=14400
+      - GRAFANA_POSTGRES_VERSION=1200
+      - GRAFANA_TIMESCALEDB=True
+    networks:
+      - gateway
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - 5050:80
+    networks:
+      - gateway
+
+  broker:
+    image: hivemq/hivemq4
+    ports:
+      - 8080:8080
+      - 1883:1883
+    
+
+networks:
+  gateway:
