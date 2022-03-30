@@ -10,7 +10,8 @@ def start_mqtt_client(state_machine, count):
     print('Client instance created')
 
     # Connect client to broker
-    client.connect(broker_address, 1883, 60)
+    client.connect(broker_address, 1883, 60)    # Mosquitto broker
+    # client.connect(broker_address, 1881, 60)  # Hivemq broker
     print('Client connected to broker')
 
     while True:

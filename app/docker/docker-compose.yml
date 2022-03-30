@@ -63,5 +63,11 @@ services:
     networks:
       - gateway
 
+   broker2:
+    image: hivemq/hivemq4
+    ports:
+      - 8080:8080
+      - 1881:1881
+
 networks:
   gateway:

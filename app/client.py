@@ -48,7 +48,8 @@ def start_client(count):
         print('Client instance created')
 
         # Connect client to broker
-        client.connect(broker_address, 1883, 60)
+        client.connect(broker_address, 1883, 60)    # Mosquitto broker
+        # client.connect(broker_address, 1881, 60)  # Hivemq broker
         print('Client connected to broker')
 
     except:
