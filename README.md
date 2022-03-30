@@ -1,8 +1,8 @@
-# P2 project
+# P2-mqtt project
 
-This project makes server/client connection between n thermostats and a docker with timescaledb.
+This project is a copy of the P2 project but instead of using OPC UA communication protocol, MQTT protocol is use for communication.
 
-The connection is made via OPC UA protocol where the server part is sending all information of the thermostats and sending to the client that inserts that into a timescaledb docker.
+To communicate via MQTT in this project you can use mosquitto or hivemq broker.
 
 Thermostats are simulated using a state machine, helped by python transitions package.
 
@@ -16,11 +16,10 @@ Thermostat.py creates a instance of the object stateMachine. This instance creat
 + Start docker-compose
     * Browse http://localhost:3000/ for Grafana
     * Browse http://localhost:5050/ for PgAdmin4
-    * Inspect Timescaledb docker to connect services to the gateway
+    * Browse http://localhost:8080/ for HiveMQ
 + Run lab.py
     * Select cuantity of thermostats
 + Run app.py
-+ Use UaExpert to control target and power
 
 ## Usefull code
 
