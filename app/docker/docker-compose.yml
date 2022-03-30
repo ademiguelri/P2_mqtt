@@ -42,19 +42,26 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_ADDRESS=timescale
+      - PGADMIN_LISTEN_PORT=5432
     ports:
       - 5050:80
     networks:
       - gateway
 
   broker:
-    image: hivemq/hivemq4
+    image: eclipse-mosquitto:2.0.10
+    hostname: mosquitto
+    container_name: mosquitto-opc
     ports:
-      - 8080:8080
       - 1883:1883
-    
+      - 9001:9001
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    networks:
+      - gateway
 
 networks:
   gateway:
