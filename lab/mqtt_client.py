@@ -17,8 +17,8 @@ def start_mqtt_client(state_machine, count):
         # Create publications for all PLC
         for i in range(int(count)):
             # Publish state machine data in the broker
-            client.publish('TH/id'+ str(i+1), state_machine[i].id)
-            client.publish('TH/time'+ str(i+1), state_machine[i].temp)
-            client.publish('TH/state'+ str(i+1), state_machine[i].state)
-            client.publish('TH/target'+ str(i+1), state_machine[i].target)
+            client.publish('TH'+str(i+1)+'/id', state_machine[i].id)
+            client.publish('TH'+str(i+1)+'/temp', state_machine[i].temp)
+            client.publish('TH'+str(i+1)+'/state', state_machine[i].state)
+            client.publish('TH'+str(i+1)+'/target', state_machine[i].target)
         time.sleep(5)

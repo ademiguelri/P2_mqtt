@@ -11,9 +11,11 @@ datasources:
     secureJsonData:
       password: $GRAFANA_PSW
     jsonData:
-      sslmode: $GRAFANA_SSL_MODE
-      maxOpenConns: $GRAFANA_MAX_OPEN_CONNS
-      maxIdleConns: $GRAFANA_MAX_IDLE_CONNS
-      connMaxLifetime: $GRAFANA_CONN_MAX_LIFETIME
-      postgresVersion: $GRAFANA_POSTGRES_VERSION
-      timescaledb: $GRAFANA_TIMESCALEDB
+      sslmode: "disable" # disable/require/verify-ca/verify-full
+      maxOpenConns: 0 # Grafana v5.4+
+      maxIdleConns: 2 # Grafana v5.4+
+      connMaxLifetime: 14400 # Grafana v5.4+
+      postgresVersion: 1000 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+      timescaledb: true
+    version: 1
+    editable: true
